@@ -5,6 +5,10 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid, Step, StepButton, Stepper } from '@mui/material';
 import Profile from './ProfileCard';
+import EducationForm from './Education';
+import Skill from './Skills';
+import Projects from './Projects';
+import Experience from './Experience';
 
 const steps = [
     {
@@ -15,28 +19,24 @@ const steps = [
     {
         id: 2,
         title: 'Education',
-        content: 'Second-content',
+        content: <EducationForm />,
     },
     {
         id: 3,
         title: 'Skills',
-        content: 'Last-content',
+        content: <Skill />,
     },
     {
         id: 4,
         title: 'Projects',
-        content: 'Last-content',
+        content: <Projects />,
     },
     {
         id: 5,
         title: 'Experience',
-        content: 'Last-content',
+        content: <Experience />,
     },
-    {
-        id: 6,
-        title: 'Social Links',
-        content: 'Last-content',
-    },
+
 ];
 
 export default function ResumeSteps() {
@@ -60,13 +60,16 @@ export default function ResumeSteps() {
     };
 
     const handleNext = () => {
-        const newActiveStep =
-            isLastStep() && !allStepsCompleted()
-                ? // It's the last step, but not all steps have been completed,
-                // find the first step that has been completed
-                steps.findIndex((step, i) => !(i in completed))
-                : activeStep + 1;
-        setActiveStep(newActiveStep);
+        const newCompleted = { ...completed };
+        newCompleted[activeStep] = true;
+        setCompleted(newCompleted);
+
+        if (isLastStep() && !allStepsCompleted()) {
+            const newActiveStep = steps.findIndex((step, i) => !(i in newCompleted));
+            setActiveStep(newActiveStep);
+        } else {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        }
     };
 
     const handleBack = () => {
@@ -118,7 +121,7 @@ export default function ResumeSteps() {
 
                         <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                             <Button
-                                color="inherit"
+                                variant='outlined'
                                 disabled={activeStep === 0}
                                 onClick={handleBack}
                                 sx={{ mr: 1 }}
@@ -126,19 +129,22 @@ export default function ResumeSteps() {
                                 Back
                             </Button>
                             <Box sx={{ flex: '1 1 auto' }} />
-                            <Button onClick={handleNext} sx={{ mr: 1 }}>
+                            <Button
+                                onClick={handleNext}
+                                sx={{ mr: 1 }}
+                                variant='outlined'
+                                disabled={isLastStep() || allStepsCompleted()}
+                            >
                                 Next
                             </Button>
                             {activeStep !== steps.length &&
                                 (completed[activeStep] ? (
-                                    <Typography variant="caption" sx={{ display: 'inline-block' }}>
+                                    <Typography variant="h6" sx={{ display: 'inline-block' }}>
                                         Step {activeStep + 1} already completed
                                     </Typography>
                                 ) : (
-                                    <Button onClick={handleComplete}>
-                                        {completedSteps() === totalSteps() - 1
-                                            ? 'Finish'
-                                            : 'Complete Step'}
+                                    <Button onClick={handleComplete} variant='outlined'>
+                                        {completedSteps() === totalSteps() - 1 ? 'Finish' : 'Complete Step'}
                                     </Button>
                                 ))}
                         </Box>

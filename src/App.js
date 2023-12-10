@@ -1,11 +1,12 @@
-import logo from './logo.svg';
+
 import './App.css';
-import ResumeSteps from './Components/Stepper';
+import Mainpage from './Components/Mainpage';
+import ResumeSteps from './Components/ResumeSteps';
 
 
 function App() {
   return (
-    <ResumeSteps />
+    <Mainpage />
   );
 }
 

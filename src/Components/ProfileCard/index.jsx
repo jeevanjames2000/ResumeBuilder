@@ -42,6 +42,15 @@ export default function Profile() {
                                         variant="outlined"
                                     />
                                 </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        type="file"
+                                        name="url"
+                                        // onChange={handleChange}
+                                        variant="outlined"
+                                    />
+                                </Grid>
                             </Grid>
                         </Grid>
                     </CardContent>
