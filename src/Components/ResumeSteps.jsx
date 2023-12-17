@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid, Step, StepButton, Stepper } from '@mui/material';
-import Profile from './ProfileCard';
+import Profile from './Profile';
 import EducationForm from './Education';
 import Skill from './Skills';
 import Projects from './Projects';
@@ -36,6 +36,11 @@ const steps = [
         title: 'Experience',
         content: <Experience />,
     },
+    {
+        id: 6,
+        title: 'Resume',
+        content: "Resume page"
+    }
 
 ];
 
